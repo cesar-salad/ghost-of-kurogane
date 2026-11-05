@@ -1,0 +1,6 @@
+{
+  "name": "GhostOfKurogane.EditMode.Tests",
+  "references": ["GhostOfKurogane.Runtime"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

@@ -1,0 +1,5 @@
+{
+  "name": "GhostOfKurogane.PlayMode.Tests",
+  "references": ["GhostOfKurogane.Runtime", "Unity.InputSystem"],
+  "optionalUnityReferences": ["TestAssemblies"]
+}

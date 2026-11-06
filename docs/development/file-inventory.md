@@ -38,3 +38,15 @@ All paths below are new to the original repository. Unity-generated .meta files 
 - `docs/game-design/vertical-slice.md` — narrative pillars and scope.
 
 Generated caches, logs, and test results are local ignored outputs. No serialized scene, renderer, or metadata was hand-authored.
+
+## M0 audit follow-up
+
+- `Assets/_Game/Scripts/Editor/PrototypeBuild.cs` and Unity-generated `.meta` — repeatable Windows development build with explicit scene and evidence report.
+- `Assets/_Game/Scripts/Player/PlayerInputReader.cs` — default bindings initialize in Reset/Awake, preserving serialized actions and avoiding the observed standalone load failure.
+- `Assets/_Game/Tests/PlayMode/PrototypeGameplayTests.cs` — input disable/re-enable lifecycle regression coverage.
+- `docs/development/prototype-audit.md` — system inventory, repository checks, source/build evidence, and remaining M0 acceptance.
+- `docs/development/prototype-bugs.md` — prioritized issues, resolved startup blocker, and observed runtime diagnostic.
+- `docs/development/playtest-notes.md` — existing feedback and pending standalone acceptance/capture checklist.
+- `PROJECT_ROADMAP.md`, `README.md`, `docs/development/unity-setup.md`, `docs/development/verification.md`, and this inventory — verified status, build instructions, and evidence links.
+
+Builds and detailed logs remain ignored under Builds/Windows/ and Logs/M0/. No source scene/settings/package files were changed for this follow-up.

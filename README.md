@@ -62,4 +62,8 @@ For batch tests, close the project in the Editor and run the installed Unity exe
 
 Placeholder art, IMGUI instructions, no animations or combat. The fallback camera has no obstacle avoidance. No death presentation, respawn, pause UI, or complete gamepad support. Health healing cannot resurrect. Interactions are actor-facing and ignore trigger-only colliders. No inventory, quests, dialogue tree, save/load, AI, or world streaming.
 
-Next milestone: manually tune the movement/camera in the playground, adopt Cinemachine with camera collision, then add one small combat encounter with hit reactions and a surrendered-enemy interaction that exercises Maddox's code of honor. Do not expand into open-world infrastructure yet.
+Current milestone: [M0 - prototype audit and baseline](docs/development/prototype-audit.md), tracked in [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md). Establish a reproducible Windows baseline and record its known issues before M1 movement/interaction improvements and M2 narrative choices. Combat follows the roadmap's graybox and narrative work.
+
+## Windows baseline build
+
+Use **Ghost of Kurogane > Build Windows Baseline** after script import. It builds the saved playground explicitly into a unique ignored directory under Builds/Windows and writes build-evidence.txt beside the executable. It requires Windows Build Support, does not regenerate the scene, and preserves the Build Profile scene list. See [baseline build instructions](docs/development/unity-setup.md#m0-windows-baseline-build).

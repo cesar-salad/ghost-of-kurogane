@@ -79,6 +79,19 @@ namespace GhostOfKurogane.Tests
         private void Press(params Key[] keys) => InputSystem.QueueStateEvent(keyboard, new KeyboardState(keys));
 
         [UnityTest]
+        public IEnumerator InputReaderCanBeDisabledAndReenabled()
+        {
+            var reader = actor.GetComponent<PlayerInputReader>();
+            reader.enabled = false;
+            Vector3 start = actor.position;
+            Press(Key.W);
+            for (int frame = 0; frame < 10; frame++) yield return null;
+            Assert.That(actor.position.z, Is.EqualTo(start.z).Within(0.01f));
+            reader.enabled = true;
+            for (int frame = 0; frame < 20; frame++) yield return null;
+            Assert.That(actor.position.z - start.z, Is.GreaterThan(0.5f));
+        }
+        [UnityTest]
         public IEnumerator WalkSprintAndCameraFollow()
         {
             Vector3 start = actor.position;

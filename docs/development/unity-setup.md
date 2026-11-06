@@ -26,3 +26,19 @@ Third Person Follow follows the target's rotation and does not read input itself
 ## Version control
 
 Install Git LFS and run `git lfs install`; run `git lfs pull` after cloning. The attributes cover common binary art/audio/video formats. Use lowercase extensions consistently. Force Text serialization does not make every `.asset` file textual: add specific binary asset types to LFS when introduced. Do not apply a Unity YAML merge driver unless UnityYAMLMerge is actually configured on contributor machines. Keep `.meta` files beside every imported asset; move assets inside Unity so GUIDs survive.
+
+## M0 Windows baseline build
+
+Install Windows Build Support for 6000.3.27f1 through Hub if needed. Open the project and wait for script import, then select **Ghost of Kurogane > Build Windows Baseline**. Save changes when prompted; canceling leaves the build unstarted. This builds the saved Prototype_Playground scene, not whichever scene happens to be open. A unique Builds/Windows/Baseline-* directory contains GhostOfKurogane.exe, its required data/player files, and build-evidence.txt. Keep the complete directory together.
+
+The command uses a Windows x64 Development build and StrictMode, preserves the configured Build Profile scene list, and reports a failed build as an error. It does not regenerate any gameplay assets. Exit Play mode before building. Close this project in the Editor before using the batch command below (or use a separate clean checkout).
+
+```powershell
+& 'C:\Program Files\Unity\Hub\Editor\6000.3.27f1\Editor\Unity.exe' `
+  -batchmode -nographics -quit -projectPath 'C:\path\to\ghost-of-kurogane' `
+  -buildTarget Win64 `
+  -executeMethod GhostOfKurogane.Editor.PrototypeBuild.BuildWindowsBaseline `
+  -logFile 'C:\path\to\ghost-of-kurogane\Logs\M0-Windows-build.log'
+```
+
+Inspect the exit code, build-evidence.txt, and log. Launch the executable directly for visual/input acceptance using [playtest-notes.md](playtest-notes.md). This is a development baseline, not a distribution-ready Steam build. M0's current source and evidence are recorded in [prototype-audit.md](prototype-audit.md).

@@ -43,3 +43,12 @@ These logs are deliberately not committed. Rerun the Test Runner to reproduce th
 7. Add the chosen scene to a Windows Build Profile and perform a standalone build/smoke test. No player build was made during this milestone.
 
 The fallback camera has no collision avoidance, and only move has a gamepad binding. Cinemachine migration and full controller support remain future work. No claim of visual approval, complete gamepad support, or standalone build validation is made.
+
+## M0 follow-up
+
+The historical foundation results above are retained. The M0 audit found and fixed a standalone-only Input System initialization failure. Current candidate results are 7 EditMode and 5 PlayMode tests passed, Windows build succeeded with 0 errors/warnings, and a headless scene startup without the original exception. See [prototype-audit.md](prototype-audit.md) for exact evidence, the remaining allocator diagnostic, and pending manual acceptance/capture.
+
+
+### Developer standalone confirmation - 2026-11-05
+
+The developer tested the Windows build and reported that it looked good, was playable, and basic commands worked. Basic manual visual/playability acceptance is now recorded. This does not certify the unreported individual smoke checks or resolve the allocator diagnostic; see [playtest-notes.md](playtest-notes.md). No tests were rerun for this documentation-only update.

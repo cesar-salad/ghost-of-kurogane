@@ -2,7 +2,7 @@
 
 > **Living project plan** · Version 1.0 · Last reviewed: 2026-11-05  
 > **Engine:** Unity 6 / C# / URP · **Initial platform:** Windows PC · **Potential release:** Steam  
-> **Current state:** Basic third-person prototype is working. Exact feature completeness requires an audit.  
+> **Current state:** M0 audit and Windows baseline recorded; developer confirms basic standalone visuals/playability and controls. Detailed smoke checks, gameplay capture, and stable tag remain pending.
 > **Next milestone:** M0 — Prototype Audit & Baseline
 
 **Purpose:** Use this file to decide what to build next, track progress, and determine when a milestone is *actually finished*. Keep the first release goal small enough to playtest. The full RPG vision is a direction, **not** the current delivery commitment.
@@ -50,7 +50,7 @@
 
 | ID | Milestone | Status | Target evidence | Depends on |
 | --- | --- | --- | --- | --- |
-| M0 | Prototype audit & project baseline | **Next** | Recorded baseline build and known issues | Existing prototype |
+| M0 | Prototype audit & project baseline | **In progress** | Recorded baseline build and known issues | Existing prototype |
 | M1 | Player controls & interaction quality | Not started | Playable navigation/interaction test | M0 |
 | M2 | Narrative foundation & first decision | Not started | Branching dialogue + saved outcome within session | M0, M1 interaction |
 | M3 | The Weight of Mercy — graybox | Not started | Fully traversable 10–20 min scenario | M1, M2 |
@@ -107,17 +107,19 @@
 
 **Tasks**
 
-- [ ] Run the existing prototype from a clean checkout; document Unity version, packages, and setup instructions.
-- [ ] Inventory working systems: movement, camera, collision, jump/sprint, interaction, animation, input, health, builds.
-- [ ] Mark each system `Working`, `Partial`, `Missing`, or `Broken` in `docs/development/prototype-audit.md`.
+- [x] Run the existing prototype from a clean checkout; document Unity version, packages, and setup instructions.
+- [x] Inventory working systems: movement, camera, collision, jump/sprint, interaction, animation, input, health, builds.
+- [x] Mark each system `Working`, `Partial`, `Missing`, or `Broken` in `docs/development/prototype-audit.md`.
 - [ ] Record baseline screenshots or 30–60 seconds of gameplay capture.
-- [ ] Create a fresh Windows build (or log exact build blockers).
-- [ ] Verify Git ignores Unity generated directories, tracks `.meta` files, and uses Git LFS for large binaries as appropriate.
-- [ ] Confirm no secrets, commercial asset source files prohibited from redistribution, or unsupported plugins are committed.
-- [ ] Create a prioritized bug list (`P0` blocker, `P1` major, `P2` polish).
+- [x] Create a fresh Windows build (or log exact build blockers).
+- [x] Verify Git ignores Unity generated directories, tracks `.meta` files, and uses Git LFS for large binaries as appropriate.
+- [x] Confirm no secrets, commercial asset source files prohibited from redistribution, or unsupported plugins are committed.
+- [x] Create a prioritized bug list (`P0` blocker, `P1` major, `P2` polish).
 - [ ] Commit/tag stable baseline (example: `prototype-baseline-01`).
 
 **Exit criteria:** A second developer—or future you—can clone the repo, open the correct Unity version, run the prototype, and understand known limitations.
+
+**Evidence (2026-11-05):** [Prototype audit](docs/development/prototype-audit.md), [prioritized issues](docs/development/prototype-bugs.md), and [pending standalone acceptance](docs/development/playtest-notes.md). Clean source tests passed (7 EditMode, 4 PlayMode); the standalone exposed an input-initialization blocker, now fixed and verified with 7 EditMode + 5 PlayMode tests, a successful Windows build, and a headless startup check. Secret/license checks cover the current tracked inventory and limited signature scan, not all Git history. Developer subsequently confirmed that the Windows build looked good, was playable, and basic commands worked. M0 remains In progress pending the unreported detailed smoke checks, capture, and reviewed commit/tag.
 
 **Do not do yet:** Refactor all code for theoretical future character classes.
 
@@ -436,6 +438,17 @@ Create the supporting files **only when they have useful content**. This tree is
 ## 10. Weekly progress log
 
 Copy the template for each new week, keeping the most recent entry first.
+### Week of 2026-11-02
+
+- **Current milestone:** M0 - Prototype audit and project baseline
+- **Status:** In progress
+- **Playable improvement shipped:** Fixed standalone startup failure caused by Input System binding setup during scene deserialization; no gameplay expansion.
+- **Completed tasks:** Clean-checkout import/tests, system and repository audit, prioritized issues, repeatable Windows development build.
+- **Open blockers (with owner/next action):** Developer: standalone visual/input smoke pass and real gameplay capture; then review/commit/tag baseline. Investigate allocator diagnostic if it reproduces with normal rendering.
+- **Playtest observation or evidence:** Existing developer Editor feedback was positive. Clean baseline: 7 EditMode / 4 PlayMode pass. Corrected candidate: 7 EditMode / 5 PlayMode pass; Windows build 0 errors / 0 warnings; headless startup loads scene without the original exception.
+- **Next week's single most important outcome:** Finish M0 acceptance and establish a tagged baseline before M1.
+- **Scope changes / decisions:** Only fix an observed M0 startup blocker; defer camera/boundary polish to M1.
+- **Build or commit reference:** Source da8cb5e plus current M0 changes; local Builds/Windows/M0-da8cb5e-fixed; not yet committed/tagged.
 
 ### Week of YYYY-MM-DD
 

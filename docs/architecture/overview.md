@@ -45,3 +45,8 @@ Only local project configuration and source are versioned. Library, Temp, Logs, 
 ## Extension boundaries
 
 Future animation can observe motion; combat can use Health without embedding damage rules in locomotion; NPCs and story objects can implement IInteractable. These are extension points, not prebuilt systems. Reserved directories are organizational placeholders only.
+
+
+## Input initialization and standalone builds
+
+Default input actions are populated in Reset (Editor authoring) and Awake (runtime fallback), preserving existing named serialized actions. Binding construction must not run in a MonoBehaviour field initializer: standalone scene deserialization can trigger Input System resource queries before Unity permits them. PrototypeBuild creates uniquely named Windows development builds from the saved playground using an explicit scene list and writes a build-evidence.txt report. It does not mutate the configured Build Profile scene list.

@@ -52,3 +52,8 @@ The historical foundation results above are retained. The M0 audit found and fix
 ### Developer standalone confirmation - 2026-11-05
 
 The developer tested the Windows build and reported that it looked good, was playable, and basic commands worked. Basic manual visual/playability acceptance is now recorded. This does not certify the unreported individual smoke checks or resolve the allocator diagnostic; see [playtest-notes.md](playtest-notes.md). No tests were rerun for this documentation-only update.
+
+
+### Baseline screenshots and Git reference - 2026-11-06
+
+Three developer-supplied Editor Game-view screenshots are preserved byte-for-byte with SHA-256 checksums in the [baseline capture register](baseline/prototype-baseline-01/README.md). The evidence is committed on codex/m0-baseline-01 and annotated as prototype-baseline-01, with unchanged gameplay source from d2d40a9. Image-copy hashes, LFS pointers, documentation links, staged scope, and Git references are checked for this update; no gameplay tests or builds are rerun. The still images do not establish completed interactions, motion sequences, or new standalone smoke-check results.

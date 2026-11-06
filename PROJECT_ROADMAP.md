@@ -1,8 +1,8 @@
 # Ghost of Kurogane — Development Roadmap
 
-> **Living project plan** · Version 1.0 · Last reviewed: 2026-11-05  
+> **Living project plan** · Version 1.0 · Last reviewed: 2026-11-06
 > **Engine:** Unity 6 / C# / URP · **Initial platform:** Windows PC · **Potential release:** Steam  
-> **Current state:** M0 audit and Windows baseline recorded; developer confirms basic standalone visuals/playability and controls. Detailed smoke checks, gameplay capture, and stable tag remain pending.
+> **Current state:** M0 audit and Windows baseline recorded; developer confirms basic standalone visuals/playability and controls. Screenshots and prototype-baseline-01 are recorded on a separate branch; detailed smoke checks remain pending.
 > **Next milestone:** M0 — Prototype Audit & Baseline
 
 **Purpose:** Use this file to decide what to build next, track progress, and determine when a milestone is *actually finished*. Keep the first release goal small enough to playtest. The full RPG vision is a direction, **not** the current delivery commitment.
@@ -110,18 +110,20 @@
 - [x] Run the existing prototype from a clean checkout; document Unity version, packages, and setup instructions.
 - [x] Inventory working systems: movement, camera, collision, jump/sprint, interaction, animation, input, health, builds.
 - [x] Mark each system `Working`, `Partial`, `Missing`, or `Broken` in `docs/development/prototype-audit.md`.
-- [ ] Record baseline screenshots or 30–60 seconds of gameplay capture.
+- [x] Record baseline screenshots or 30–60 seconds of gameplay capture.
 - [x] Create a fresh Windows build (or log exact build blockers).
 - [x] Verify Git ignores Unity generated directories, tracks `.meta` files, and uses Git LFS for large binaries as appropriate.
 - [x] Confirm no secrets, commercial asset source files prohibited from redistribution, or unsupported plugins are committed.
 - [x] Create a prioritized bug list (`P0` blocker, `P1` major, `P2` polish).
-- [ ] Commit/tag stable baseline (example: `prototype-baseline-01`).
+- [x] Commit/tag stable baseline (example: `prototype-baseline-01`).
 
 **Exit criteria:** A second developer—or future you—can clone the repo, open the correct Unity version, run the prototype, and understand known limitations.
 
-**Evidence (2026-11-05):** [Prototype audit](docs/development/prototype-audit.md), [prioritized issues](docs/development/prototype-bugs.md), and [pending standalone acceptance](docs/development/playtest-notes.md). Clean source tests passed (7 EditMode, 4 PlayMode); the standalone exposed an input-initialization blocker, now fixed and verified with 7 EditMode + 5 PlayMode tests, a successful Windows build, and a headless startup check. Secret/license checks cover the current tracked inventory and limited signature scan, not all Git history. Developer subsequently confirmed that the Windows build looked good, was playable, and basic commands worked. M0 remains In progress pending the unreported detailed smoke checks, capture, and reviewed commit/tag.
+**Evidence (2026-11-05):** [Prototype audit](docs/development/prototype-audit.md), [prioritized issues](docs/development/prototype-bugs.md), and [pending standalone acceptance](docs/development/playtest-notes.md). Clean source tests passed (7 EditMode, 4 PlayMode); the standalone exposed an input-initialization blocker, now fixed and verified with 7 EditMode + 5 PlayMode tests, a successful Windows build, and a headless startup check. Secret/license checks cover the current tracked inventory and limited signature scan, not all Git history. Developer subsequently confirmed that the Windows build looked good, was playable, and basic commands worked. M0 remains In progress pending the unreported detailed smoke checks.
 
 **Do not do yet:** Refactor all code for theoretical future character classes.
+
+**Baseline evidence (2026-11-06):** Three original [Editor Game-view screenshots](docs/development/baseline/prototype-baseline-01/README.md) are preserved through Git LFS. Branch `codex/m0-baseline-01` records this evidence; annotated tag `prototype-baseline-01` identifies its baseline commit. These images complement the reported Windows playtest but do not certify additional standalone smoke checks.
 
 ### M1 — Player controls & interaction quality
 

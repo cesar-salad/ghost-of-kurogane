@@ -20,7 +20,7 @@ Candidate: Builds/Windows/M0-da8cb5e-fixed/GhostOfKurogane.exe (da8cb5e plus cur
 | Escape releases cursor; click re-captures; focus loss/recovery is usable | Pending | |
 | Camera near wall and movement near scene edges | Pending | Record GOK-001 / GOK-002 reproduction. |
 | Quit the standalone normally and inspect Player log for errors | Pending | |
-| Record screenshots or 30-60 seconds of real gameplay | Pending | |
+| Record screenshots or 30-60 seconds of real gameplay | Recorded | Three original Editor Game-view screenshots supplied on 2026-11-06; see the capture register below. |
 
 Record date, tester, Windows/GPU, resolution, build/source reference, completion or failure, and concrete reproduction steps. Store a small approved capture under docs/development/baseline/ when one exists (binary formats already use LFS), or link to its actual local/shared location. Do not create empty capture files.
 
@@ -29,3 +29,8 @@ Headless tests and a startup check cannot approve rendering, mouse feel, focus b
 ## Developer Windows playtest - 2026-11-05
 
 The developer confirmed testing the Windows build: it looked good, was playable, and basic commands worked. This records a manual standalone visual/playability check. The candidate linked above is the build provided for testing; its exact executable path was not restated in the report. Detailed interaction, collision, cursor/focus, normal-exit/log checks, hardware details, and capture were not reported and remain pending. The allocator diagnostic is not considered resolved by this general feedback.
+
+
+## Baseline screenshots and tag - 2026-11-06
+
+Three supplied screenshots are preserved with captions, source filenames, and SHA-256 checksums in the [baseline capture register](baseline/prototype-baseline-01/README.md). They show the Editor Game view, including an overview, terminal prompt, and player above a platform. They fulfill the roadmap capture task without establishing new standalone per-check passes. Gameplay source is d2d40a9; branch codex/m0-baseline-01 and annotated tag prototype-baseline-01 identify the evidence commit. Detailed smoke checks and the allocator diagnostic remain open.

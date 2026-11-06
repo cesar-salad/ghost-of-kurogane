@@ -69,8 +69,8 @@ The developer reports that the Windows build looked good and was playable with b
 
 ## Remaining M0 acceptance
 
-- [ ] Capture baseline screenshots or 30-60 seconds of actual gameplay. Suggested shots: starting overview, jump/obstacle traversal, terminal prompt. Keep the capture tied to the build/source reference; do not substitute generated concept imagery.
+- [x] Capture baseline screenshots or 30-60 seconds of actual gameplay. Three original Editor Game-view captures are preserved in the [baseline register](baseline/prototype-baseline-01/README.md), submitted 2026-11-06; gameplay source d2d40a9.
 - [ ] Complete the standalone manual smoke checklist in [playtest-notes.md](playtest-notes.md).
-- [ ] Commit reviewed M0 changes and tag the chosen stable revision as `prototype-baseline-01`. No commit or tag is created automatically by this audit.
+- [x] Record the baseline evidence commit on `codex/m0-baseline-01` and annotate it with `prototype-baseline-01`, as requested by the developer. Gameplay remains the committed M0 source d2d40a9.
 
-Known issues are prioritized in [prototype-bugs.md](prototype-bugs.md). M0 remains In progress until its remaining evidence and stable baseline are recorded.
+Known issues are prioritized in [prototype-bugs.md](prototype-bugs.md). Screenshots and the tagged baseline are recorded. M0 remains In progress pending the detailed standalone smoke checks; the baseline retains the documented known limitations.

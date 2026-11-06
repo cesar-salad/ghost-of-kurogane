@@ -50,3 +50,8 @@ Generated caches, logs, and test results are local ignored outputs. No serialize
 - `PROJECT_ROADMAP.md`, `README.md`, `docs/development/unity-setup.md`, `docs/development/verification.md`, and this inventory — verified status, build instructions, and evidence links.
 
 Builds and detailed logs remain ignored under Builds/Windows/ and Logs/M0/. No source scene/settings/package files were changed for this follow-up.
+
+## Baseline visual evidence - 2026-11-06
+
+- docs/development/baseline/prototype-baseline-01/: three original screenshots tracked through Git LFS, README captions/provenance, and SHA256SUMS.txt.
+- PROJECT_ROADMAP.md and the audit, playtest, and verification records: capture completion and the separate baseline branch/tag, with detailed manual smoke checks still open.

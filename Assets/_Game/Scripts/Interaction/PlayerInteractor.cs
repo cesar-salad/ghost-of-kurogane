@@ -1,3 +1,4 @@
+using System;
 using GhostOfKurogane.Player;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace GhostOfKurogane.Interaction
         [SerializeField] private LayerMask detectionMask = ~0;
         private MonoBehaviour currentBehaviour;
         public IInteractable Current => currentBehaviour != null ? currentBehaviour as IInteractable : null;
+        /// <summary>Emitted once after a detected target successfully receives an interaction.</summary>
+        public event Action InteractionPerformed;
         private void Awake() { if (input == null) input = GetComponent<PlayerInputReader>(); }
 
         private void Update()
@@ -30,7 +33,12 @@ namespace GhostOfKurogane.Interaction
                     }
                 }
             }
-            if (input.InteractPressed) Current?.Interact(gameObject);
+            IInteractable target = Current;
+            if (input.InteractPressed && target != null)
+            {
+                target.Interact(gameObject);
+                InteractionPerformed?.Invoke();
+            }
         }
     }
 }

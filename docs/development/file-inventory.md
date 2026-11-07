@@ -55,3 +55,12 @@ Builds and detailed logs remain ignored under Builds/Windows/ and Logs/M0/. No s
 
 - docs/development/baseline/prototype-baseline-01/: three original screenshots tracked through Git LFS, README captions/provenance, and SHA256SUMS.txt.
 - PROJECT_ROADMAP.md and the audit, playtest, and verification records: capture completion and the separate baseline branch/tag, with detailed manual smoke checks still open.
+
+
+## M1 first quality pass - 2026-11-06
+
+- ThirdPersonCamera.cs: sphere-cast collision response and smooth distance recovery.
+- PlayerInteractor.cs and PrototypeHud.cs: lifecycle-safe notification and temporary confirmation.
+- PrototypeGameplayTests.cs: camera collision/filtering and interaction feedback assertions.
+- docs/development/m1-quality-pass.md: scope, configuration, tests, limitations, and manual smoke steps.
+- Roadmap, README, architecture, bug register, setup, and verification records: current M1 progress and evidence. Gameplay scenes, settings, packages, and baseline tag remain unchanged.

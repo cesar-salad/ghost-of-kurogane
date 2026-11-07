@@ -2,6 +2,7 @@ using System.Collections;
 using GhostOfKurogane.CameraSystem;
 using GhostOfKurogane.Interaction;
 using GhostOfKurogane.Player;
+using GhostOfKurogane.UI;
 using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -137,12 +138,61 @@ namespace GhostOfKurogane.Tests
         }
 
         [UnityTest]
+        public IEnumerator CameraContractsBeforeWallAndRecovers()
+        {
+            Vector3 pivot = actor.position + new Vector3(0f, 1.5f, 0f);
+            Assert.That(Vector3.Distance(view.position, pivot), Is.EqualTo(5f).Within(0.05f));
+            var wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            wall.transform.SetParent(root.transform);
+            wall.transform.position = new Vector3(0f, 2f, -2f);
+            wall.transform.localScale = new Vector3(4f, 4f, 0.5f);
+            Physics.SyncTransforms();
+            yield return null;
+            yield return null;
+            Assert.That(view.position.z, Is.GreaterThan(-1.5f));
+            Assert.That(Physics.CheckSphere(view.position, 0.24f, ~0, QueryTriggerInteraction.Ignore), Is.False);
+            float contractedDistance = Vector3.Distance(view.position, pivot);
+            Object.Destroy(wall);
+            yield return null;
+            yield return null;
+            float recoveringDistance = Vector3.Distance(view.position, pivot);
+            Assert.That(recoveringDistance, Is.GreaterThan(contractedDistance));
+            Assert.That(recoveringDistance, Is.LessThan(4.9f));
+            for (int frame = 0; frame < 90; frame++) yield return null;
+            Assert.That(Vector3.Distance(view.position, pivot), Is.EqualTo(5f).Within(0.05f));
+        }
+
+        [UnityTest]
+        public IEnumerator CameraIgnoresTriggersAndFollowTargetColliders()
+        {
+            var trigger = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            trigger.transform.SetParent(root.transform);
+            trigger.transform.position = new Vector3(0f, 2f, -2f);
+            trigger.transform.localScale = new Vector3(4f, 4f, 0.5f);
+            trigger.GetComponent<Collider>().isTrigger = true;
+            var accessory = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            accessory.transform.SetParent(actor, false);
+            accessory.transform.localPosition = new Vector3(0f, 1.7f, -1f);
+            Physics.SyncTransforms();
+            for (int frame = 0; frame < 5; frame++) yield return null;
+            Vector3 pivot = actor.position + new Vector3(0f, 1.5f, 0f);
+            Assert.That(Vector3.Distance(view.position, pivot), Is.EqualTo(5f).Within(0.05f));
+        }
+        [UnityTest]
         public IEnumerator InteractionUsesInputAndWallsBlockTarget()
         {
             var terminal = GameObject.CreatePrimitive(PrimitiveType.Cube);
             terminal.transform.SetParent(root.transform);
             terminal.transform.position = new Vector3(0f, 1f, 2f);
             var interactable = terminal.AddComponent<ExampleInteractable>();
+            var interactor = actor.GetComponent<PlayerInteractor>();
+            int notifications = 0;
+            interactor.InteractionPerformed += () => notifications++;
+            var hudObject = new GameObject("Test HUD");
+            hudObject.transform.SetParent(root.transform);
+            var hud = hudObject.AddComponent<PrototypeHud>();
+            hud.Configure(interactor);
+            Assert.That(hud.FeedbackMessage, Is.Empty);
             Physics.SyncTransforms();
             yield return null;
             Assert.That(actor.GetComponent<PlayerInteractor>().Current, Is.SameAs(interactable));
@@ -150,6 +200,8 @@ namespace GhostOfKurogane.Tests
             yield return null;
             yield return null;
             Assert.That(interactable.InteractionCount, Is.EqualTo(1));
+            Assert.That(notifications, Is.EqualTo(1));
+            Assert.That(hud.FeedbackMessage, Is.EqualTo("Interaction complete."));
             Press();
             yield return null;
             var wall = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -163,6 +215,9 @@ namespace GhostOfKurogane.Tests
             yield return null;
             yield return null;
             Assert.That(interactable.InteractionCount, Is.EqualTo(1));
+            Assert.That(notifications, Is.EqualTo(1));
+            yield return new WaitForSecondsRealtime(2.6f);
+            Assert.That(hud.FeedbackMessage, Is.Empty);
         }
     }
 }

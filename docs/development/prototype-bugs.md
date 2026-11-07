@@ -17,3 +17,13 @@ Animation, combat, dialogue, saving, and progression are intentionally absent an
 | --- | --- | --- | --- | --- |
 | GOK-005 | P0 | Fixed; headless startup verified | Initial executable logged InputSystem TypeInitializationException because PlayerInputReader.CreateMove ran in a field initializer during scene load. Default setup now runs in Reset/Awake and preserves serialized bindings. Rebuilt with 0 errors/warnings; 7 EditMode + 5 PlayMode tests pass; corrected player loads without the exception. | Include normal keyboard/mouse acceptance in the standalone smoke pass before tagging. |
 | GOK-006 | P2 | Open; environment-dependent behavior unverified | Corrected headless startup logged an allocator lifetime diagnostic (4 permitted frames, allocation age 6). No managed exception/assertion followed and process remained running. Cause is unknown; no gameplay source fix is justified yet. | Capture whether it repeats in a normal rendered launch; retain Player log and escalate investigation if persistent or accompanied by a fault. |
+
+## M1 follow-up - 2026-11-06
+
+The M0 rows above describe the tagged historical baseline. Current working-source updates:
+
+- **GOK-002:** Basic camera collision fallback implemented. PlayMode tests verify wall clearance, smooth recovery, and trigger/follow-target filtering. Embedded pivots, near-plane corners, and normal-rendered camera feel remain manual acceptance items.
+- **GOK-003:** Timed HUD confirmation implemented through PlayerInteractor.InteractionPerformed. PlayMode coverage verifies one notification per access, blocked-target suppression, and expiration. Visual placement/readability remain manual acceptance items.
+- **GOK-001 / GOK-004 / GOK-006:** Remain open. Boundary recovery, full gamepad support, and the prior allocator diagnostic are outside this first quality pass.
+
+See [M1 quality-pass smoke steps](m1-quality-pass.md). No new visual acceptance is inferred from automated results.

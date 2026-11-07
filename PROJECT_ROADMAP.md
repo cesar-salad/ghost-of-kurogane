@@ -2,8 +2,8 @@
 
 > **Living project plan** · Version 1.0 · Last reviewed: 2026-11-06
 > **Engine:** Unity 6 / C# / URP · **Initial platform:** Windows PC · **Potential release:** Steam  
-> **Current state:** M0 audit and Windows baseline recorded; developer confirms basic standalone visuals/playability and controls. Screenshots and prototype-baseline-01 are recorded on a separate branch; detailed smoke checks remain pending.
-> **Next milestone:** M0 — Prototype Audit & Baseline
+> **Current state:** Tagged M0 baseline retained; first M1 camera-collision and interaction-feedback pass implemented with passing Unity tests. M0 detailed smoke checks and M1 visual acceptance remain open.
+> **Next milestone:** M1 — Player controls & interaction quality (in progress)
 
 **Purpose:** Use this file to decide what to build next, track progress, and determine when a milestone is *actually finished*. Keep the first release goal small enough to playtest. The full RPG vision is a direction, **not** the current delivery commitment.
 
@@ -51,7 +51,7 @@
 | ID | Milestone | Status | Target evidence | Depends on |
 | --- | --- | --- | --- | --- |
 | M0 | Prototype audit & project baseline | **In progress** | Recorded baseline build and known issues | Existing prototype |
-| M1 | Player controls & interaction quality | Not started | Playable navigation/interaction test | M0 |
+| M1 | Player controls & interaction quality | **In progress** | Playable navigation/interaction test | M0 |
 | M2 | Narrative foundation & first decision | Not started | Branching dialogue + saved outcome within session | M0, M1 interaction |
 | M3 | The Weight of Mercy — graybox | Not started | Fully traversable 10–20 min scenario | M1, M2 |
 | M4 | Combat & bloodlust narrative integration | Not started | One reliable encounter and consequential power choice | M3 graybox |
@@ -135,15 +135,17 @@
 - [ ] Confirm input rebinding strategy and controller support approach; keyboard/mouse must work first.
 - [ ] Handle slopes, stairs, ledges, collisions, and scene boundaries without obvious breaks.
 - [ ] Add simple input lock/unlock for dialogue and cinematics.
-- [ ] Support contextual interaction with a clear prompt and limited range.
-- [ ] Implement one reusable interactable example (terminal or door).
-- [ ] Add camera collision/occlusion behavior or acceptable fallback.
+- [x] Support contextual interaction with a clear prompt and limited range.
+- [x] Implement one reusable interactable example (terminal or door).
+- [x] Add camera collision/occlusion behavior or acceptable fallback.
 - [ ] Define a minimal player state model (exploring, interacting, combat, cutscene); avoid conflicting inputs.
-- [ ] Write smoke-test steps for movement, interaction, and camera.
+- [x] Write smoke-test steps for movement, interaction, and camera.
 
 **Exit criteria:** A tester can traverse the graybox, use a terminal, and enter/exit an interaction without control glitches or getting stuck.
 
-**Dependencies:** M0.
+**Evidence (2026-11-06):** [First M1 quality pass](docs/development/m1-quality-pass.md). Existing prompt/range/terminal components are reused. Sphere-cast camera collision and a timed interaction confirmation pass focused PlayMode coverage; 7 EditMode and 7 PlayMode tests pass. Visual acceptance remains pending; the full M1 exit criterion is not yet met.
+
+**Dependencies:** M0. The developer requested beginning this bounded M1 increment while M0's unreported detailed smoke checks remain recorded as open.
 
 ### M2 — Narrative foundation & first meaningful choice
 
@@ -470,6 +472,7 @@ Copy the template for each new week, keeping the most recent entry first.
 
 | Date | Decision | Reason | Revisit when |
 | --- | --- | --- | --- |
+| 2026-11-06 | Begin a bounded M1 camera/interaction quality pass while retaining M0 smoke-check gaps | Developer requested the next phase after tagging and testing the baseline | Before declaring M1 complete |
 | 2026-11-05 | Narrative and difficult moral choices are the primary MVP focus | Distinctive player experience and manageable scope | After first external playtests |
 | 2026-11-05 | First slice uses Maddox, one short mission, and one consequential choice | Validate core experience without building four worlds | M7 |
 | 2026-11-05 | Four regions, extra protagonists, and four combat classes remain future scope | Avoid premature content and systems expansion | F1 approval |

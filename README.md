@@ -48,7 +48,7 @@ Keep external assets in their own folders outside `_Game` and record licenses in
 
 ## Architecture and current features
 
-[Architecture overview](docs/architecture/overview.md) describes component responsibilities. Input Actions are serialized on the input reader and editable in its Inspector; movement and interaction never reference physical keys. The move action already includes a gamepad stick binding. Full gamepad camera and button support is a future task.
+[Architecture overview](docs/architecture/overview.md) describes component responsibilities. Input Actions are serialized on the input reader and editable in its Inspector; movement and interaction never reference physical keys. The move action already includes a gamepad stick binding. Full gamepad camera and button support is a future task. The first M1 pass adds camera collision and a timed interaction confirmation; see [quality-pass setup and smoke steps](docs/development/m1-quality-pass.md).
 
 Movement includes analog walk/sprint, smooth facing, grounded collision, gravity, and jumping. Interaction uses a forward ray from the actor, respecting the first solid obstruction. Health exposes bounded damage/healing, change events, and one death event. The scene-owned manager exposes initialization, playing, and paused states without a singleton. Paused is a state notification only; a complete pause flow is not implemented.
 
@@ -60,9 +60,9 @@ For batch tests, close the project in the Editor and run the installed Unity exe
 
 ## Limitations and next milestones
 
-Placeholder art, IMGUI instructions, no animations or combat. The fallback camera has no obstacle avoidance. No death presentation, respawn, pause UI, or complete gamepad support. Health healing cannot resurrect. Interactions are actor-facing and ignore trigger-only colliders. No inventory, quests, dialogue tree, save/load, AI, or world streaming.
+Placeholder art, IMGUI instructions, no animations or combat. The fallback camera now contracts before detected geometry and smoothly restores its distance; embedded-pivot and tight-corner cases still require visual testing. No death presentation, respawn, pause UI, or complete gamepad support. Health healing cannot resurrect. Interactions are actor-facing and ignore trigger-only colliders. No inventory, quests, dialogue tree, save/load, AI, or world streaming.
 
-Current milestone: [M0 - prototype audit and baseline](docs/development/prototype-audit.md), tracked in [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md). Establish a reproducible Windows baseline and record its known issues before M1 movement/interaction improvements and M2 narrative choices. Combat follows the roadmap's graybox and narrative work.
+Current work: [M1 player controls and interaction quality](docs/development/m1-quality-pass.md), tracked in [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md). The tagged M0 baseline remains available; its detailed manual-check gaps remain recorded. Next M1 work covers scene-boundary recovery and input locking before M2 narrative choices. Combat follows the roadmap's graybox and narrative work.
 
 ## Windows baseline build
 

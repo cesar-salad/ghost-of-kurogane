@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GhostOfKurogane.CameraSystem
 {
-    /// <summary>Small mouse orbit fallback used until Cinemachine is installed.</summary>
+    /// <summary>Mouse orbit camera with smooth tracking and world-geometry collision handling.</summary>
     [DisallowMultipleComponent]
     public sealed class ThirdPersonCamera : MonoBehaviour
     {
@@ -15,6 +15,14 @@ namespace GhostOfKurogane.CameraSystem
         [SerializeField, Min(0f)] private float mouseSensitivity = 0.15f;
         [SerializeField] private float minimumPitch = -25f;
         [SerializeField] private float maximumPitch = 65f;
+        [Header("Collision")]
+        [SerializeField] private LayerMask _collisionMask = ~0;
+        [SerializeField, Min(0.01f)] private float _collisionRadius = 0.25f;
+        [SerializeField, Min(0f)] private float _collisionPadding = 0.05f;
+        [SerializeField, Min(0.01f)] private float _distanceRecoveryTime = 0.2f;
+        private readonly RaycastHit[] _collisionHits = new RaycastHit[32];
+        private float _currentDistance;
+        private float _distanceVelocity;
         private float yaw;
         private float pitch = 15f;
         private Vector3 pivot;
@@ -34,6 +42,8 @@ namespace GhostOfKurogane.CameraSystem
             previousLock = Cursor.lockState;
             previousVisibility = Cursor.visible;
             initialized = false;
+            pivotVelocity = Vector3.zero;
+            _distanceVelocity = 0f;
         }
 
         private void Start()
@@ -56,6 +66,7 @@ namespace GhostOfKurogane.CameraSystem
             {
                 pivot = target.position + targetOffset;
                 yaw = target.eulerAngles.y;
+                _currentDistance = distance;
                 initialized = true;
             }
             if (Cursor.lockState == CursorLockMode.Locked && Application.isFocused)
@@ -67,7 +78,39 @@ namespace GhostOfKurogane.CameraSystem
             pivot = Vector3.SmoothDamp(pivot, target.position + targetOffset,
                 ref pivotVelocity, trackingSmoothTime);
             Quaternion rotation = Quaternion.Euler(pitch, yaw, 0f);
-            transform.SetPositionAndRotation(pivot - rotation * Vector3.forward * distance, rotation);
+            Vector3 backward = rotation * Vector3.back;
+            float clearDistance = GetClearDistance(backward);
+            // Contract immediately so damping never carries the camera through a blocking wall.
+            // Only the return to the desired orbit distance is smoothed.
+            if (clearDistance <= _currentDistance)
+            {
+                _currentDistance = clearDistance;
+                _distanceVelocity = 0f;
+            }
+            else
+            {
+                _currentDistance = Mathf.Min(clearDistance, Mathf.SmoothDamp(_currentDistance,
+                    clearDistance, ref _distanceVelocity, _distanceRecoveryTime));
+            }
+            transform.SetPositionAndRotation(pivot + backward * _currentDistance, rotation);
+        }
+
+        private float GetClearDistance(Vector3 direction)
+        {
+            int count = Physics.SphereCastNonAlloc(pivot, _collisionRadius, direction,
+                _collisionHits, distance, _collisionMask, QueryTriggerInteraction.Ignore);
+            // A full buffer may omit the closest obstacle. Stay at the pivot rather than
+            // trusting an incomplete result in unusually dense geometry.
+            if (count == _collisionHits.Length) return 0f;
+            float clearDistance = distance;
+            for (int index = 0; index < count; index++)
+            {
+                Transform hitTransform = _collisionHits[index].collider.transform;
+                if (hitTransform == target || hitTransform.IsChildOf(target)) continue;
+                clearDistance = Mathf.Min(clearDistance, Mathf.Max(0f,
+                    _collisionHits[index].distance - _collisionPadding));
+            }
+            return clearDistance;
         }
 
         private static void CaptureCursor() { Cursor.lockState = CursorLockMode.Locked; Cursor.visible = false; }

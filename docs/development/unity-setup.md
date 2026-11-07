@@ -42,3 +42,7 @@ The command uses a Windows x64 Development build and StrictMode, preserves the c
 ```
 
 Inspect the exit code, build-evidence.txt, and log. Launch the executable directly for visual/input acceptance using [playtest-notes.md](playtest-notes.md). This is a development baseline, not a distribution-ready Steam build. M0's current source and evidence are recorded in [prototype-audit.md](prototype-audit.md).
+
+## First M1 quality pass
+
+Open the existing Prototype_Playground after compilation; its existing camera, interactor, and HUD references are sufficient. New collision/feedback fields have defaults, so scene regeneration is unnecessary. Tune collision layers/radius/padding/recovery on ThirdPersonCamera and confirmation text/duration on PrototypeHud if needed. Follow [M1 quality-pass smoke steps](m1-quality-pass.md) for wall/corner and terminal acceptance. Cinemachine remains optional.

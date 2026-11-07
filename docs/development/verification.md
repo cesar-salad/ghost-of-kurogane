@@ -57,3 +57,10 @@ The developer tested the Windows build and reported that it looked good, was pla
 ### Baseline screenshots and Git reference - 2026-11-06
 
 Three developer-supplied Editor Game-view screenshots are preserved byte-for-byte with SHA-256 checksums in the [baseline capture register](baseline/prototype-baseline-01/README.md). The evidence is committed on codex/m0-baseline-01 and annotated as prototype-baseline-01, with unchanged gameplay source from d2d40a9. Image-copy hashes, LFS pointers, documentation links, staged scope, and Git references are checked for this update; no gameplay tests or builds are rerun. The still images do not establish completed interactions, motion sequences, or new standalone smoke-check results.
+
+
+## First M1 quality pass - 2026-11-06
+
+Camera collision and temporary interaction confirmation compile against the existing package versions. EditMode: 7/7 passed; PlayMode: 7/7 passed. Windows development build succeeded with 0 errors and 0 warnings; headless standalone loaded the saved scene and remained alive for 15 seconds without the tested runtime error signatures. Source hashes match the isolated validation copy. The baseline tag and scene/settings/package files are unchanged.
+
+See [M1 quality pass](m1-quality-pass.md) for exact evidence, commands, limitations, and pending manual smoke steps. The runnable local copy is Builds/Windows/M1-quality-pass-01/GhostOfKurogane.exe; ignored logs/results are in Logs/M1-quality-pass-01/. No normal-rendered camera/feedback acceptance is claimed yet.

@@ -26,6 +26,18 @@ namespace GhostOfKurogane.Player
             input = reader;
             movementCamera = cameraTransform;
         }
+        /// <summary>Moves the actor without a collision sweep and clears accumulated movement velocity.</summary>
+        public void Teleport(Vector3 position, Quaternion rotation)
+        {
+            if (controller == null) controller = GetComponent<CharacterController>();
+            bool wasEnabled = controller.enabled;
+            controller.enabled = false;
+            transform.SetPositionAndRotation(position, rotation);
+            verticalVelocity = 0f;
+            rotationVelocity = 0f;
+            controller.enabled = wasEnabled;
+        }
+
         private void Awake()
         {
             controller = GetComponent<CharacterController>();

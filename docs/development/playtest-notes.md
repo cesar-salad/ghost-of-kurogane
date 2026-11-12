@@ -4,7 +4,9 @@
 
 The developer tested the initial playground locally and described it as a solid first attempt. No recording, hardware details, timings, or per-check results were supplied. This is broad positive feedback only.
 
-## M0 standalone acceptance - basic playtest confirmed
+## Original M0 candidate - historical check matrix
+
+The matrix below preserves the original candidate record. Later acceptance on 2026-11-06 is recorded at the end of this document and closes the M0 exit criterion; it is not retroactively attributed to this exact earlier executable.
 
 Candidate: Builds/Windows/M0-da8cb5e-fixed/GhostOfKurogane.exe (da8cb5e plus current M0 input fix/build tooling; build UTC 2026-11-05T23:36:05Z). Record the exact build-evidence.txt path and eventual source commit when testing. The older M0-da8cb5e directory reproduces the fixed startup bug and should not be used for acceptance. Run the Windows executable directly; do not rely on Play Mode for this pass.
 
@@ -34,3 +36,10 @@ The developer confirmed testing the Windows build: it looked good, was playable,
 ## Baseline screenshots and tag - 2026-11-06
 
 Three supplied screenshots are preserved with captions, source filenames, and SHA-256 checksums in the [baseline capture register](baseline/prototype-baseline-01/README.md). They show the Editor Game view, including an overview, terminal prompt, and player above a platform. They fulfill the roadmap capture task without establishing new standalone per-check passes. Gameplay source is d2d40a9; branch codex/m0-baseline-01 and annotated tag prototype-baseline-01 identify the evidence commit. Detailed smoke checks and the allocator diagnostic remain open.
+
+
+## First M1 acceptance and M0 exit - 2026-11-06
+
+The developer reports following all manual smoke steps in m1-quality-pass.md and that everything looks good. Those steps cover movement, orbit/wall/corner behavior, sprint/jump, terminal confirmation and expiration, blocked/held interactions, lifecycle/cursor/focus behavior, and the standalone repeat. This is developer-reported manual acceptance of the first M1 pass (implementation b92e59e), not a new automated observation by the assistant.
+
+The developer also reports that a second developer cloned the repository and tested the build, and explicitly accepts M0's exit criterion. M0 is now Done. Names, hardware, exact build identity, and Player-log contents were not supplied; the allocator diagnostic remains tracked. New input-lock and fall-recovery work postdates this report and requires its own acceptance.

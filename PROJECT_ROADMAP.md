@@ -2,7 +2,7 @@
 
 > **Living project plan** · Version 1.0 · Last reviewed: 2026-11-06
 > **Engine:** Unity 6 / C# / URP · **Initial platform:** Windows PC · **Potential release:** Steam  
-> **Current state:** Tagged M0 baseline retained; first M1 camera-collision and interaction-feedback pass implemented with passing Unity tests. M0 detailed smoke checks and M1 visual acceptance remain open.
+> **Current state:** M0 complete after developer smoke acceptance and a second developer cloning/testing the build. M1 continues with input locking and fall recovery; the first camera/feedback pass is manually accepted.
 > **Next milestone:** M1 — Player controls & interaction quality (in progress)
 
 **Purpose:** Use this file to decide what to build next, track progress, and determine when a milestone is *actually finished*. Keep the first release goal small enough to playtest. The full RPG vision is a direction, **not** the current delivery commitment.
@@ -50,7 +50,7 @@
 
 | ID | Milestone | Status | Target evidence | Depends on |
 | --- | --- | --- | --- | --- |
-| M0 | Prototype audit & project baseline | **In progress** | Recorded baseline build and known issues | Existing prototype |
+| M0 | Prototype audit & project baseline | **Done** | Recorded baseline build and known issues | Existing prototype |
 | M1 | Player controls & interaction quality | **In progress** | Playable navigation/interaction test | M0 |
 | M2 | Narrative foundation & first decision | Not started | Branching dialogue + saved outcome within session | M0, M1 interaction |
 | M3 | The Weight of Mercy — graybox | Not started | Fully traversable 10–20 min scenario | M1, M2 |
@@ -119,7 +119,9 @@
 
 **Exit criteria:** A second developer—or future you—can clone the repo, open the correct Unity version, run the prototype, and understand known limitations.
 
-**Evidence (2026-11-05):** [Prototype audit](docs/development/prototype-audit.md), [prioritized issues](docs/development/prototype-bugs.md), and [pending standalone acceptance](docs/development/playtest-notes.md). Clean source tests passed (7 EditMode, 4 PlayMode); the standalone exposed an input-initialization blocker, now fixed and verified with 7 EditMode + 5 PlayMode tests, a successful Windows build, and a headless startup check. Secret/license checks cover the current tracked inventory and limited signature scan, not all Git history. Developer subsequently confirmed that the Windows build looked good, was playable, and basic commands worked. M0 remains In progress pending the unreported detailed smoke checks.
+**Evidence (2026-11-05):** [Prototype audit](docs/development/prototype-audit.md), [prioritized issues](docs/development/prototype-bugs.md), and [pending standalone acceptance](docs/development/playtest-notes.md). Clean source tests passed (7 EditMode, 4 PlayMode); the standalone exposed an input-initialization blocker, now fixed and verified with 7 EditMode + 5 PlayMode tests, a successful Windows build, and a headless startup check. Secret/license checks cover the current tracked inventory and limited signature scan, not all Git history. Developer subsequently confirmed that the Windows build looked good, was playable, and basic commands worked. M0 was subsequently closed on 2026-11-06 after the developer confirmed all first-M1 smoke steps and a second developer cloning/testing the build; see the closure record below.
+
+**M0 exit accepted (2026-11-06):** The developer reports that all manual steps in m1-quality-pass.md look good, and a second developer cloned the repository and tested the build. This closes the documented M0 reproducibility exit criterion. Hardware details and Player-log diagnostics were not independently supplied; GOK-006 remains a tracked non-blocking follow-up.
 
 **Do not do yet:** Refactor all code for theoretical future character classes.
 
@@ -134,7 +136,7 @@
 - [ ] Confirm camera-relative move, rotate, sprint and optional jump work consistently at variable frame rates.
 - [ ] Confirm input rebinding strategy and controller support approach; keyboard/mouse must work first.
 - [ ] Handle slopes, stairs, ledges, collisions, and scene boundaries without obvious breaks.
-- [ ] Add simple input lock/unlock for dialogue and cinematics.
+- [x] Add simple input lock/unlock for dialogue and cinematics.
 - [x] Support contextual interaction with a clear prompt and limited range.
 - [x] Implement one reusable interactable example (terminal or door).
 - [x] Add camera collision/occlusion behavior or acceptable fallback.
@@ -143,9 +145,11 @@
 
 **Exit criteria:** A tester can traverse the graybox, use a terminal, and enter/exit an interaction without control glitches or getting stuck.
 
-**Evidence (2026-11-06):** [First M1 quality pass](docs/development/m1-quality-pass.md). Existing prompt/range/terminal components are reused. Sphere-cast camera collision and a timed interaction confirmation pass focused PlayMode coverage; 7 EditMode and 7 PlayMode tests pass. Visual acceptance remains pending; the full M1 exit criterion is not yet met.
+**Evidence (2026-11-06):** [First M1 quality pass](docs/development/m1-quality-pass.md). Existing prompt/range/terminal components are reused. Sphere-cast camera collision and a timed interaction confirmation pass focused PlayMode coverage; 7 EditMode and 7 PlayMode tests pass. The developer reports all first-pass manual smoke steps passed. Input locking and fall recovery now pass focused tests; variable-frame-rate/terrain coverage and input/state ownership remain unfinished; the full M1 exit criterion is not yet met.
 
-**Dependencies:** M0. The developer requested beginning this bounded M1 increment while M0's unreported detailed smoke checks remain recorded as open.
+**Safety/input evidence (2026-11-06):** [Second M1 increment](docs/development/m1-safety-and-input.md). Gameplay gating suppresses movement/look/actions without disabling gravity or cursor controls; recovery returns a fallen actor to its initial or configured pose and preserves input lock. 7 EditMode and 11 PlayMode tests pass; the scene upgrade and Windows build succeed. The composite slopes/stairs/ledges task remains open pending terrain acceptance.
+
+**Dependencies:** M0. M0 exit is now accepted. Continue bounded M1 increments before narrative work in M2.
 
 ### M2 — Narrative foundation & first meaningful choice
 
@@ -442,7 +446,13 @@ Create the supporting files **only when they have useful content**. This tree is
 ## 10. Weekly progress log
 
 Copy the template for each new week, keeping the most recent entry first.
-### Week of 2026-11-02
+### 2026-11-06 acceptance update
+
+- **M0:** Done; developer reports a second developer cloned the repository and tested the build.
+- **M1:** First quality-pass manual steps accepted by the developer. Input locking and fall recovery are the next bounded increment; new automated and manual results will be recorded separately.
+- **Reference:** First M1 implementation b92e59e; baseline tag prototype-baseline-01 remains unchanged.
+
+### Week of 2026-11-02 (initial audit record)
 
 - **Current milestone:** M0 - Prototype audit and project baseline
 - **Status:** In progress
@@ -481,7 +491,7 @@ Copy the template for each new week, keeping the most recent entry first.
 
 ## 12. Immediate next actions
 
-1. **Complete M0:** Audit the prototype you already have, produce a standalone build, and write down what actually works.
+1. **Continue M1:** M0 is complete. Validate input locking and fall recovery, then finish variable-frame-rate/terrain checks and input/state ownership.
 2. **Choose one narrative moment:** Implement a short Maddox–Daichi interaction with a stateful choice.
 3. **Prove consequences:** Return to Daichi after the mission decision and show a genuinely different reaction.
 4. **Only then build the full graybox:** Connect the workshop, annex, encounter, surrender, and aftermath.

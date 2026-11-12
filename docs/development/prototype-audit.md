@@ -1,6 +1,6 @@
 # M0 - Prototype audit and baseline
 
-Audit date: 2026-11-05. Status: In progress. Source baseline: `da8cb5e` (foundation implementation: `1adbaa6`). Gameplay was inspected without refactoring or upgrading dependencies.
+Audit date: 2026-11-05. Status: Done (exit accepted 2026-11-06). Source baseline: `da8cb5e` (foundation implementation: `1adbaa6`). Gameplay was inspected without refactoring or upgrading dependencies.
 
 ## Reproduction and evidence
 
@@ -67,10 +67,10 @@ Local ignored evidence: `Logs/M0/M0-Fixed-EditMode.xml`, `M0-Fixed-PlayMode.xml`
 
 The developer reports that the Windows build looked good and was playable with basic commands working. This supplements the automated/headless evidence with a reported visual and basic-control check. See [playtest-notes.md](playtest-notes.md) for scope; detailed checks and the allocator diagnostic remain open.
 
-## Remaining M0 acceptance
+## M0 acceptance and closure
 
 - [x] Capture baseline screenshots or 30-60 seconds of actual gameplay. Three original Editor Game-view captures are preserved in the [baseline register](baseline/prototype-baseline-01/README.md), submitted 2026-11-06; gameplay source d2d40a9.
-- [ ] Complete the standalone manual smoke checklist in [playtest-notes.md](playtest-notes.md).
+- [x] Receive manual acceptance and independent clone/build confirmation. On 2026-11-06 the developer reported all first-M1 smoke steps passed and a second developer cloned the repository and tested the build; see [playtest-notes.md](playtest-notes.md).
 - [x] Record the baseline evidence commit on `codex/m0-baseline-01` and annotate it with `prototype-baseline-01`, as requested by the developer. Gameplay remains the committed M0 source d2d40a9.
 
-Known issues are prioritized in [prototype-bugs.md](prototype-bugs.md). Screenshots and the tagged baseline are recorded. M0 remains In progress pending the detailed standalone smoke checks; the baseline retains the documented known limitations.
+Known issues are prioritized in [prototype-bugs.md](prototype-bugs.md). Screenshots and the tagged baseline are recorded. M0 exit is complete based on the developer's reported manual acceptance and second-developer clone/build test. Known limitations remain tracked for M1 and later; the allocator diagnostic is not implicitly resolved.

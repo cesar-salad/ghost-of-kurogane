@@ -64,3 +64,12 @@ Three developer-supplied Editor Game-view screenshots are preserved byte-for-byt
 Camera collision and temporary interaction confirmation compile against the existing package versions. EditMode: 7/7 passed; PlayMode: 7/7 passed. Windows development build succeeded with 0 errors and 0 warnings; headless standalone loaded the saved scene and remained alive for 15 seconds without the tested runtime error signatures. Source hashes match the isolated validation copy. The baseline tag and scene/settings/package files are unchanged.
 
 See [M1 quality pass](m1-quality-pass.md) for exact evidence, commands, limitations, and pending manual smoke steps. The runnable local copy is Builds/Windows/M1-quality-pass-01/GhostOfKurogane.exe; ignored logs/results are in Logs/M1-quality-pass-01/. No normal-rendered camera/feedback acceptance is claimed yet.
+
+
+## M0 closure and first M1 manual acceptance - 2026-11-06
+
+The developer reports all manual smoke steps in m1-quality-pass.md passed and a second developer cloned the repository and tested the build. This closes M0's reproducibility exit criterion and manually accepts the first camera/interaction pass. These are reported results; hardware details and Player-log diagnostics were not independently supplied. The allocator diagnostic remains tracked.
+
+## M1 safety/input increment - 2026-11-06 local
+
+Input gating and fall recovery compile in Unity 6000.3.27f1. EditMode: 7/7; PlayMode: 11/11. The incremental scene upgrade succeeds and a second run is byte-identical. The Windows build succeeds with 0 errors/warnings; headless standalone loads the upgraded scene and remains alive for 15 seconds without the tested runtime error signatures. Manual acceptance of this new increment remains pending. See [safety/input results and checks](m1-safety-and-input.md) for exact evidence, build timestamp, local candidate path, and the expected Unity-generated scene whitespace note.

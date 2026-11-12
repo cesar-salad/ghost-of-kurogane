@@ -47,7 +47,9 @@ namespace GhostOfKurogane.Editor
             camera.nearClipPlane = 0.1f;
             cameraObject.AddComponent<AudioListener>();
             cameraObject.AddComponent<UniversalAdditionalCameraData>();
-            cameraObject.AddComponent<ThirdPersonCamera>().Configure(player.transform, input);
+            var followCamera = cameraObject.AddComponent<ThirdPersonCamera>();
+            followCamera.Configure(player.transform, input);
+            player.AddComponent<PlayerFallRecovery>().Configure(followCamera);
             cameraObject.transform.SetPositionAndRotation(new Vector3(0f, 3f, -5f), Quaternion.Euler(15f, 0f, 0f));
             movement.Configure(input, camera.transform);
             new GameObject("Prototype HUD").AddComponent<PrototypeHud>().Configure(interactor);
@@ -69,6 +71,29 @@ namespace GhostOfKurogane.Editor
             if (!EditorSceneManager.SaveScene(scene, path)) throw new IOException("Could not save prototype scene.");
             AssetDatabase.SaveAssets();
             Debug.Log($"Created {path}. Existing scenes and Build Profiles were preserved.");
+        }
+
+        /// <summary>Adds recovery to the saved playground without regenerating existing objects or GUIDs.</summary>
+        [MenuItem("Ghost of Kurogane/Upgrade Playground Safety")]
+        public static void UpgradePlaygroundSafety()
+        {
+            if (EditorApplication.isPlayingOrWillChangePlaymode) return;
+            if (!Application.isBatchMode && !EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo()) return;
+            const string path = "Assets/_Game/Scenes/Prototypes/Prototype_Playground.unity";
+            if (!File.Exists(path)) throw new FileNotFoundException("Open or generate the prototype playground first.", path);
+            Scene scene = EditorSceneManager.OpenScene(path, OpenSceneMode.Single);
+            var players = Object.FindObjectsByType<PlayerController>(FindObjectsSortMode.None);
+            var cameras = Object.FindObjectsByType<ThirdPersonCamera>(FindObjectsSortMode.None);
+            if (players.Length != 1 || cameras.Length != 1)
+                throw new System.InvalidOperationException("Expected exactly one active player and follow camera. Wire PlayerFallRecovery manually for a custom scene.");
+            var recovery = players[0].GetComponent<PlayerFallRecovery>();
+            if (recovery == null) recovery = Undo.AddComponent<PlayerFallRecovery>(players[0].gameObject);
+            Undo.RecordObject(recovery, "Configure playground fall recovery");
+            recovery.Configure(cameras[0]);
+            EditorUtility.SetDirty(recovery);
+            EditorSceneManager.MarkSceneDirty(scene);
+            if (!EditorSceneManager.SaveScene(scene, path)) throw new IOException("Could not save the upgraded playground.");
+            Debug.Log("Playground safety upgraded; existing objects and scene GUID preserved.");
         }
 
         /// <summary>Initial project defaults; existing render-pipeline configuration is preserved.</summary>

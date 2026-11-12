@@ -93,6 +93,73 @@ namespace GhostOfKurogane.Tests
             Assert.That(actor.position.z - start.z, Is.GreaterThan(0.5f));
         }
         [UnityTest]
+        public IEnumerator GameplayLockBlocksCommandsAndDoesNotReplayButtonEdges()
+        {
+            var terminal = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            terminal.transform.SetParent(root.transform);
+            terminal.transform.position = new Vector3(0f, 1f, 2f);
+            var target = terminal.AddComponent<ExampleInteractable>();
+            var reader = actor.GetComponent<PlayerInputReader>();
+            reader.SetGameplayInputEnabled(false);
+            Physics.SyncTransforms();
+            Vector3 start = actor.position;
+            Press(Key.W, Key.LeftShift, Key.Space, Key.E);
+            for (int frame = 0; frame < 10; frame++) yield return null;
+            Assert.That(reader.Move, Is.EqualTo(Vector2.zero));
+            Assert.That(reader.SprintHeld, Is.False);
+            Assert.That(reader.JumpPressed, Is.False);
+            Assert.That(actor.GetComponent<PlayerInteractor>().Current, Is.Null);
+            Assert.That(actor.position.z, Is.EqualTo(start.z).Within(0.01f));
+            Assert.That(target.InteractionCount, Is.Zero);
+            reader.SetGameplayInputEnabled(true);
+            for (int frame = 0; frame < 15; frame++) yield return null;
+            Assert.That(actor.position.z - start.z, Is.GreaterThan(0.5f));
+            Assert.That(actor.position.y, Is.EqualTo(start.y).Within(0.05f));
+            Assert.That(target.InteractionCount, Is.Zero, "Held interaction must not replay on unlock.");
+        }
+
+        [UnityTest]
+        public IEnumerator GameplayLockStillAllowsAirbornePlayerToLand()
+        {
+            Press(Key.Space);
+            for (int frame = 0; frame < 5; frame++) yield return null;
+            Assert.That(actor.GetComponent<PlayerController>().IsGrounded, Is.False);
+            actor.GetComponent<PlayerInputReader>().SetGameplayInputEnabled(false);
+            for (int frame = 0; frame < 90; frame++) yield return null;
+            Assert.That(actor.GetComponent<PlayerController>().IsGrounded, Is.True);
+        }
+
+        [UnityTest]
+        public IEnumerator FallRecoveryRestoresPoseCameraAndPreservesInputLock()
+        {
+            Vector3 start = actor.position;
+            Quaternion rotation = actor.rotation;
+            var recovery = actor.gameObject.AddComponent<PlayerFallRecovery>();
+            recovery.Configure(view.GetComponent<ThirdPersonCamera>());
+            var reader = actor.GetComponent<PlayerInputReader>();
+            reader.SetGameplayInputEnabled(false);
+            actor.GetComponent<PlayerController>().Teleport(new Vector3(40f, -12f, 0f), Quaternion.Euler(0f, 90f, 0f));
+            yield return null;
+            yield return null;
+            Assert.That(Vector3.Distance(actor.position, start), Is.LessThan(0.05f));
+            Assert.That(Quaternion.Angle(actor.rotation, rotation), Is.LessThan(0.1f));
+            Assert.That(Vector3.Distance(view.position, actor.position + new Vector3(0f, 1.5f, 0f)), Is.EqualTo(5f).Within(0.05f));
+            Assert.That(reader.GameplayInputEnabled, Is.False);
+            for (int frame = 0; frame < 30; frame++) yield return null;
+            Assert.That(actor.GetComponent<PlayerController>().IsGrounded, Is.True);
+        }
+
+        [UnityTest]
+        public IEnumerator FallingBeyondTheFloorReturnsToSpawn()
+        {
+            Vector3 start = actor.position;
+            actor.gameObject.AddComponent<PlayerFallRecovery>().Configure(view.GetComponent<ThirdPersonCamera>());
+            actor.GetComponent<PlayerController>().Teleport(new Vector3(40f, 0.1f, 0f), Quaternion.identity);
+            for (int frame = 0; frame < 120; frame++) yield return null;
+            Assert.That(Vector3.Distance(actor.position, start), Is.LessThan(0.05f));
+            Assert.That(actor.GetComponent<PlayerController>().IsGrounded, Is.True);
+        }
+        [UnityTest]
         public IEnumerator WalkSprintAndCameraFollow()
         {
             Vector3 start = actor.position;

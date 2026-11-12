@@ -60,10 +60,15 @@ For batch tests, close the project in the Editor and run the installed Unity exe
 
 ## Limitations and next milestones
 
-Placeholder art, IMGUI instructions, no animations or combat. The fallback camera now contracts before detected geometry and smoothly restores its distance; embedded-pivot and tight-corner cases still require visual testing. No death presentation, respawn, pause UI, or complete gamepad support. Health healing cannot resurrect. Interactions are actor-facing and ignore trigger-only colliders. No inventory, quests, dialogue tree, save/load, AI, or world streaming.
+Placeholder art, IMGUI instructions, no animations or combat. The fallback camera now contracts before detected geometry and smoothly restores its distance; embedded-pivot and tight-corner cases still require visual testing. Fall recovery now returns the player to spawn; death presentation, death-respawn, pause UI, and complete gamepad support remain absent. Health healing cannot resurrect. Interactions are actor-facing and ignore trigger-only colliders. No inventory, quests, dialogue tree, save/load, AI, or world streaming.
 
-Current work: [M1 player controls and interaction quality](docs/development/m1-quality-pass.md), tracked in [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md). The tagged M0 baseline remains available; its detailed manual-check gaps remain recorded. Next M1 work covers scene-boundary recovery and input locking before M2 narrative choices. Combat follows the roadmap's graybox and narrative work.
+Current work: [M1 player controls and interaction quality](docs/development/m1-quality-pass.md), tracked in [PROJECT_ROADMAP.md](PROJECT_ROADMAP.md). M0 is complete after reported manual acceptance and a second-developer clone/build check. M1 now includes fall recovery and a gameplay-input gate; variable-frame-rate/terrain checks and player input/state ownership remain before M2 narrative choices. Combat follows the roadmap's graybox and narrative work.
 
 ## Windows baseline build
 
 Use **Ghost of Kurogane > Build Windows Baseline** after script import. It builds the saved playground explicitly into a unique ignored directory under Builds/Windows and writes build-evidence.txt beside the executable. It requires Windows Build Support, does not regenerate the scene, and preserves the Build Profile scene list. See [baseline build instructions](docs/development/unity-setup.md#m0-windows-baseline-build).
+
+
+## Fall recovery and input locking
+
+The saved playground includes PlayerFallRecovery: falling below world Y -10 returns Maddox to his initial pose and snaps the camera. PlayerInputReader.SetGameplayInputEnabled controls gameplay input while gravity/cursor controls continue. For Play-mode checks, use its Lock/Unlock Gameplay Input context-menu commands. See [safety/input setup and checks](docs/development/m1-safety-and-input.md). The existing scene was upgraded through Unity APIs; reopening it after compilation is sufficient.

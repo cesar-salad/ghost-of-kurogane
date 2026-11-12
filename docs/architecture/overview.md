@@ -55,3 +55,10 @@ Default input actions are populated in Reset (Editor authoring) and Awake (runti
 ## M1 interaction feedback
 
 PlayerInteractor now emits InteractionPerformed after its detected target''s Interact method returns. PrototypeHud subscribes/unsubscribes with its component lifecycle (and handles Configure after OnEnable), then presents a short Inspector-configured confirmation using unscaled time. Gameplay does not depend on the HUD. This notification confirms dispatch of the current void interaction contract; it is not a dialogue result or general success/failure system.
+
+
+## Gameplay gating and fall recovery
+
+PlayerInputReader owns a single gameplay-input gate: movement/look/jump/sprint/interact getters return neutral commands while locked; cursor commands remain available. Unlock skips the current frame to avoid replaying action edges. PlayerInteractor clears its target while gated. This is not a Time.timeScale pause: locomotion still applies gravity and the camera still follows. Dialogue/cinematic code will own paired gate calls; no global or nested lock manager was introduced.
+
+PlayerFallRecovery runs after movement, captures the initial pose in Awake (or uses a configured Return Point), and detects crossing its world-Y threshold. It calls PlayerController.Teleport, which preserves CharacterController enabled state and clears vertical/rotation velocity, then calls ThirdPersonCamera.SnapToTarget. Recovery never unlocks input or changes health/state. The Editor safety upgrade adds/configures the component on the saved scene through Unity APIs and preserves the existing scene GUID and object identities.

@@ -193,6 +193,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: GhostOfKurogane.Runtime::GhostOfKurogane.UI.PrototypeHud
   interactor: {fileID: 1204525021}
+  _feedbackDuration: 2.5
+  _interactionFeedback: Interaction complete.
 --- !u!4 &320370861
 Transform:
   m_ObjectHideFlags: 0
@@ -361,6 +363,12 @@ MonoBehaviour:
   mouseSensitivity: 0.15
   minimumPitch: -25
   maximumPitch: 65
+  _collisionMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  _collisionRadius: 0.25
+  _collisionPadding: 0.05
+  _distanceRecoveryTime: 0.2
 --- !u!114 &603374427
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -844,6 +852,7 @@ GameObject:
   - component: {fileID: 1204525025}
   - component: {fileID: 1204525024}
   - component: {fileID: 1204525021}
+  - component: {fileID: 1204525027}
   m_Layer: 0
   m_Name: Maddox (Placeholder)
   m_TagString: Untagged
@@ -1122,6 +1131,21 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &1204525027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1204525020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 353a4d918708e994d9b8eba54513c005, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: GhostOfKurogane.Runtime::GhostOfKurogane.Player.PlayerFallRecovery
+  _minimumWorldY: -10
+  _returnPoint: {fileID: 0}
+  _camera: {fileID: 603374426}
 --- !u!1 &1415057333
 GameObject:
   m_ObjectHideFlags: 0

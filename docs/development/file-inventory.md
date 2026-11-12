@@ -64,3 +64,11 @@ Builds and detailed logs remain ignored under Builds/Windows/ and Logs/M0/. No s
 - PrototypeGameplayTests.cs: camera collision/filtering and interaction feedback assertions.
 - docs/development/m1-quality-pass.md: scope, configuration, tests, limitations, and manual smoke steps.
 - Roadmap, README, architecture, bug register, setup, and verification records: current M1 progress and evidence. Gameplay scenes, settings, packages, and baseline tag remain unchanged.
+
+
+## M1 safety/input pass - 2026-11-06
+
+- Added Player/PlayerFallRecovery.cs and its Unity-generated .meta, plus docs/development/m1-safety-and-input.md.
+- Updated PlayerInputReader, PlayerController, PlayerInteractor, ThirdPersonCamera, PrototypeSceneBuilder, and PlayMode tests for gating, teleport/recovery, and incremental scene upgrade.
+- Prototype_Playground.unity is saved through Unity, adding recovery and serializing the existing camera/feedback defaults. Existing object IDs, scene GUID, and references are preserved; no hand-authored YAML or regenerated scene.
+- Roadmap, README, architecture, audit/playtest/verification, setup, quality-pass, and issue records capture M0 exit acceptance and this M1 increment. Package versions, project settings, and baseline tag remain unchanged.

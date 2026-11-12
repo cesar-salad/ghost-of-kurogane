@@ -46,3 +46,8 @@ Inspect the exit code, build-evidence.txt, and log. Launch the executable direct
 ## First M1 quality pass
 
 Open the existing Prototype_Playground after compilation; its existing camera, interactor, and HUD references are sufficient. New collision/feedback fields have defaults, so scene regeneration is unnecessary. Tune collision layers/radius/padding/recovery on ThirdPersonCamera and confirmation text/duration on PrototypeHud if needed. Follow [M1 quality-pass smoke steps](m1-quality-pass.md) for wall/corner and terminal acceptance. Cinemachine remains optional.
+
+
+## M1 fall recovery and gameplay input gate
+
+Reopen the saved Prototype_Playground after compilation to load its added PlayerFallRecovery component and camera reference. No new input asset or package is required. New playgrounds include recovery automatically; the idempotent Ghost of Kurogane > Upgrade Playground Safety command upgrades an older saved playground in place, prompting to save open work and preserving its GUID/objects. For custom scenes, add PlayerFallRecovery to the actor and assign its follow camera; configure a safe Return Point and Minimum World Y as needed. The gameplay input gate is on the existing PlayerInputReader and can be exercised from its component context menu in Play mode. See [manual safety/input checks](m1-safety-and-input.md).

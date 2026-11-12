@@ -37,6 +37,14 @@ namespace GhostOfKurogane.CameraSystem
             input = reader;
         }
 
+        /// <summary>Resets follow smoothing after a teleport. The next LateUpdate resolves collision at the new target.</summary>
+        public void SnapToTarget()
+        {
+            initialized = false;
+            pivotVelocity = Vector3.zero;
+            _distanceVelocity = 0f;
+        }
+
         private void OnEnable()
         {
             previousLock = Cursor.lockState;

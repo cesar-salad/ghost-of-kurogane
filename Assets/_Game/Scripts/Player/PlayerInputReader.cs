@@ -14,12 +14,33 @@ namespace GhostOfKurogane.Player
         [SerializeField] private InputAction interact;
         [SerializeField] private InputAction releaseCursor;
         [SerializeField] private InputAction captureCursor;
-        public Vector2 Move => isActiveAndEnabled ? Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f) : Vector2.zero;
+        private bool _gameplayInputEnabled = true;
+        private int _resumeAfterFrame = -1;
+
+        /// <summary>Whether gameplay commands may be consumed this frame. Cursor commands stay available.</summary>
+        public bool CanReadGameplayInput => isActiveAndEnabled && _gameplayInputEnabled && Time.frameCount > _resumeAfterFrame;
+        public bool GameplayInputEnabled => _gameplayInputEnabled;
+
+        /// <summary>Single-owner gameplay gate for a dialogue or cinematic controller. No actions or bindings are destroyed.</summary>
+        public void SetGameplayInputEnabled(bool enabled)
+        {
+            if (_gameplayInputEnabled == enabled) return;
+            _gameplayInputEnabled = enabled;
+            // Do not replay jump/interact edges from the frame that ends an interaction.
+            if (enabled) _resumeAfterFrame = Time.frameCount;
+        }
+
+        [ContextMenu("Lock Gameplay Input")]
+        private void LockGameplayInput() => SetGameplayInputEnabled(false);
+        [ContextMenu("Unlock Gameplay Input")]
+        private void UnlockGameplayInput() => SetGameplayInputEnabled(true);
+
+        public Vector2 Move => CanReadGameplayInput ? Vector2.ClampMagnitude(move.ReadValue<Vector2>(), 1f) : Vector2.zero;
         /// <summary>Mouse displacement per frame; consumers must not multiply this by deltaTime.</summary>
-        public Vector2 Look => isActiveAndEnabled ? look.ReadValue<Vector2>() : Vector2.zero;
-        public bool JumpPressed => isActiveAndEnabled && jump.WasPressedThisFrame();
-        public bool SprintHeld => isActiveAndEnabled && sprint.IsPressed();
-        public bool InteractPressed => isActiveAndEnabled && interact.WasPressedThisFrame();
+        public Vector2 Look => CanReadGameplayInput ? look.ReadValue<Vector2>() : Vector2.zero;
+        public bool JumpPressed => CanReadGameplayInput && jump.WasPressedThisFrame();
+        public bool SprintHeld => CanReadGameplayInput && sprint.IsPressed();
+        public bool InteractPressed => CanReadGameplayInput && interact.WasPressedThisFrame();
         public bool ReleaseCursorPressed => isActiveAndEnabled && releaseCursor.WasPressedThisFrame();
         public bool CaptureCursorPressed => isActiveAndEnabled && captureCursor.WasPressedThisFrame();
         // Binding setup can initialize InputSystem and query Unity resources. Keep it out of

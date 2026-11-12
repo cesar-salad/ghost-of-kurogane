@@ -1,6 +1,6 @@
 # M1 - First player-controls and interaction quality pass
 
-Started 2026-11-06, following the developer's request to begin the next phase. M0's baseline remains tagged prototype-baseline-01; its unreported detailed smoke checks are still open. This is a bounded M1 increment, not completion of the full milestone.
+Started 2026-11-06, following the developer's request to begin the next phase. M0's baseline remains tagged prototype-baseline-01; its exit was accepted on 2026-11-06 after reported manual acceptance and a second-developer clone/build check. This is a bounded M1 increment, not completion of the full milestone.
 
 ## Implemented behavior
 
@@ -30,7 +30,7 @@ Scene-boundary recovery (GOK-001), slopes/stairs and variable-frame-rate accepta
 
 ## Validation
 
-Unity tests and a Windows development build are run in a separate local checkout using Unity 6000.3.27f1 with the existing package versions. Recorded results are appended after observation. The PlayMode suite adds camera contraction/recovery and collider-filtering coverage; the interaction test also checks a single notification, blocked-target suppression, and HUD expiration. Manual visual/input acceptance remains pending.
+Unity tests and a Windows development build are run in a separate local checkout using Unity 6000.3.27f1 with the existing package versions. Recorded results are appended after observation. The PlayMode suite adds camera contraction/recovery and collider-filtering coverage; the interaction test also checks a single notification, blocked-target suppression, and HUD expiration. Developer-reported manual acceptance is recorded below.
 ### Observed results - 2026-11-06
 
 - Unity compilation: successful in 6000.3.27f1; no C# compiler errors or warnings in the recorded test/build logs.
@@ -53,4 +53,8 @@ Unity.exe -batchmode -nographics -quit -projectPath <validation-checkout> -build
 GhostOfKurogane.exe -batchmode -nographics -logFile <player-startup.log>
 ```
 
-The manual steps above remain pending. These results establish the first quality increment, not the full M1 definition of done.
+The developer subsequently reported all manual steps above passed (2026-11-06). This accepts the first quality increment, not the full M1 definition of done.
+
+### Developer acceptance - 2026-11-06
+
+The developer confirmed following all manual smoke steps and that everything looks good. The first camera/interaction quality pass is manually accepted. A second developer also cloned the repository and tested the build, closing M0's reproducibility exit criterion. New work is described in [M1 safety and input locking](m1-safety-and-input.md); it is not covered by this earlier playtest report.

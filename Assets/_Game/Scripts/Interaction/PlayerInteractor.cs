@@ -21,6 +21,7 @@ namespace GhostOfKurogane.Interaction
         private void Update()
         {
             currentBehaviour = null;
+            if (!input.CanReadGameplayInput) return;
             if (Physics.Raycast(transform.position + originOffset, transform.forward, out RaycastHit hit,
                 range, detectionMask, QueryTriggerInteraction.Ignore))
             {
